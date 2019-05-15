@@ -7,7 +7,7 @@ def article_list(request):
     context = {
         'articles': articles
     }
-    return render_to_response('article_list.html', context)
+    return render_to_response('blog/article_list.html', context)
 
 
 def article_detail(request, article_pk):
@@ -15,7 +15,7 @@ def article_detail(request, article_pk):
     context = {
         'article': article
     }
-    return render_to_response('article_detail.html', context)
+    return render_to_response('blog/article_detail.html', context)
 
 
 def articles_with_category(request, category_pk):
@@ -25,4 +25,4 @@ def articles_with_category(request, category_pk):
         'articles': articles,
         'category':category,
     }
-    return render_to_response('articles_with_category.html', context)
+    return render_to_response('blog/articles_with_category.html', context)

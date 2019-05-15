@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    我的网站
+{% endblock %}
+{% block content %}
+    {% for article in articles %}
+        <a href="{% url 'article_detail' article.pk %}"><h3>{{ article.title }}</h3></a>
+        <p>{{ article.content | truncatechars:10 }}</p>
+    {% empty %}
+        <p>--暂无博客，敬请期待--</p>
+    {% endfor %}
+    <p>一共有{{ articles|length }}篇博客</p>
+{% endblock %}
