@@ -2,11 +2,14 @@
 {% block title %}
     {{ category }}
 {% endblock %}
+{% block nav_blog_active %}
+    active
+{% endblock %}
 {% block content %}
     <h3>{{ category }}</h3>
     {% for article in articles %}
         <a href="{% url 'article_detail' article.pk %}"><h3>{{ article.title }}</h3></a>
-        <p>{{ article.content | truncatechars:10 }}</p>
+        <p>{{ article.content | truncatechars:300 }}</p>
     {% empty %}
         <p>--暂无博客，敬请期待--</p>
     {% endfor %}

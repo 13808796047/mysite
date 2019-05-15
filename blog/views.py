@@ -4,8 +4,10 @@ from .models import Article, Category
 
 def article_list(request):
     articles = Article.objects.all()
+    categories = Category.objects.all()
     context = {
-        'articles': articles
+        'articles': articles,
+        'categories':categories
     }
     return render_to_response('blog/article_list.html', context)
 

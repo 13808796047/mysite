@@ -1,0 +1,14 @@
+ul.article-category {
+    list-style: none
+}
+div.article:not(:last-child){
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ccc;
+}
+div.article h3{
+    margin-top: .5em;
+}
+div.article p.article-info{
+    margin-bottom: 0;
+}
