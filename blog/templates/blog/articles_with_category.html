@@ -1,17 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'blog/article_list.html' %}
 {% block title %}
     {{ category }}
 {% endblock %}
-{% block nav_blog_active %}
-    active
+{% block article_list_title %}
+    <a href="{% url 'article_list' %}">查看全部博客</a>
+    分类：{{ category }}
 {% endblock %}
-{% block content %}
-    <h3>{{ category }}</h3>
-    {% for article in articles %}
-        <a href="{% url 'article_detail' article.pk %}"><h3>{{ article.title }}</h3></a>
-        <p>{{ article.content | truncatechars:300 }}</p>
-    {% empty %}
-        <p>--暂无博客，敬请期待--</p>
-    {% endfor %}
-    <p>一共有{{ articles|length }}篇博客</p>
-{% endblock %}
+

@@ -19,3 +19,6 @@ class Article(models.Model):
 
     def __str__(self):
         return "<Article:%s>" % self.title
+
+    class Meta:
+        ordering = ['-created_time']

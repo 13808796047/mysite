@@ -1,14 +1,33 @@
 ul.article-category {
     list-style: none
 }
-div.article:not(:last-child){
+
+div.article:not(:last-child) {
     margin-bottom: 2em;
     padding-bottom: 1em;
     border-bottom: 1px solid #ccc;
 }
-div.article h3{
+
+div.article h3 {
     margin-top: .5em;
 }
-div.article p.article-info{
+
+div.article p.article-info {
     margin-bottom: 0;
+}
+div .paginator{
+    text-align: center;
+}
+ul.article-info-description {
+    list-style: none;
+    margin-bottom: 2em;
+}
+
+ul.article-info-description li {
+    display: inline-block;
+    margin-right: 2em;
+}
+
+div .article-content {
+    text-indent: 1.5em;
 }

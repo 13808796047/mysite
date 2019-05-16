@@ -14,13 +14,14 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
                 <div class="panel panel-default">
-                    <div class="panel-heading">博客列表 (一共有{{ articles|length }}篇博客)</div>
+                    <div class="panel-heading">{% block article_list_title %}{% endblock %}博客列表</div>
                     <div class="panel-body">
                         {% for article in articles %}
                             <div class="article">
                                 <h3><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></h3>
                                 <p class="article-info">
-                                    <span class="glyphicon glyphicon-tag"></span><a href="{% url 'articles_with_category' article.category.pk %}">{{ article.category }}</a>
+                                    <span class="glyphicon glyphicon-tag"></span><a
+                                        href="{% url 'articles_with_category' article.category.pk %}">{{ article.category }}</a>
                                     <span class="glyphicon glyphicon-time"></span>{{ article.created_time|date:"Y-m-d H:i:s" }}
                                 </p>
                                 <p>{{ article.content | truncatechars:300 }}</p>
@@ -31,6 +32,49 @@
                             </div>
                         {% endfor %}
                     </div>
+                </div>
+
+                <div class="paginator">
+                    <ul class="pagination">
+
+                        {% if articles.has_previous %}
+                            <li>
+                                <a href="?page={{ articles.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">上一页</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span aria-hidden="true">上一页</span>
+                            </li>
+                        {% endif %}
+
+                        {#                    全部页码#}
+                        {% for page_num in page_range %}
+                            {% if articles.number == page_num %}
+                                <li class="active"><span>{{ page_num }}</span></li>
+                            {% elif page_num == '...' %}
+                                <li><span>{{ page_num }}</span></li>
+                            {% else %}
+                                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {#                    全部页码#}
+
+                        {% if articles.has_next %}
+                            <li>
+                                <a href="?page={{ articles.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">下一页</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <span aria-hidden="true">下一页</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <p>
+                        共有{{ articles.paginator.count }}篇博客,当前第{{ articles.number }}页,共有{{ articles.paginator.num_pages }}页</p>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
