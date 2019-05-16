@@ -31,3 +31,6 @@ ul.article-info-description li {
 div .article-content {
     text-indent: 1.5em;
 }
+div.article-more{
+    margin-top: 1em;
+}

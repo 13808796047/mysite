@@ -1,0 +1,9 @@
+{% extends 'blog/article_list.html' %}
+{% block title %}
+    {{ category }}
+{% endblock %}
+{% block article_list_title %}
+    <a href="{% url 'article_list' %}">查看全部博客</a>
+    日期归档：{{ articles_with_date }}
+{% endblock %}
+
