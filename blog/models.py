@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Category(models.Model):
     name = models.CharField(max_length=15)
@@ -15,7 +15,7 @@ class Category(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
-    content = RichTextField()
+    content = RichTextUploadingField()
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
