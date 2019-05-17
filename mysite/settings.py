@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'read_statistics',
 ]
 
 MIDDLEWARE = [

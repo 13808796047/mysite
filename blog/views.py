@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator
 from django.conf import settings
-from django.db.models import Count
+from read_statistics.utils import read_statistics_once
 from .models import Article, Category
 
 
@@ -67,6 +67,7 @@ def articles_with_date(request, year, month, day):
 
 def article_detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
+    read_cookie_key = read_statistics_once(request,article)
     previous_article = Article.objects.filter(created_time__gt=article.created_time).last()
     next_article = Article.objects.filter(created_time__lt=article.created_time).first()
     context = {
@@ -74,4 +75,6 @@ def article_detail(request, article_pk):
         'previous_article': previous_article,
         'next_article': next_article
     }
-    return render_to_response('blog/article_detail.html', context)
+    response = render_to_response('blog/article_detail.html', context)  # 设置阅读cookie
+    response.set_cookie(read_cookie_key, 'true', max_age=60)
+    return response

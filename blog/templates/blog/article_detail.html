@@ -17,6 +17,7 @@
                     <li>分类：<a href="{% url 'articles_with_category' article.category.pk %}">{{ article.category }}</a>
                     </li>
                     <li>发表日期：{{ article.created_time|date:"Y-m-d H:i:s" }}</li>
+                    <li>阅读（{{ article.get_read_num }}）</li>
                 </ul>
                 <div class="article-content">{{ article.content|safe }}</div>
                 <div class="article-more">

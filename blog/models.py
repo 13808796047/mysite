@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
+from read_statistics.models import ReadNumExpand
 
 class Category(models.Model):
     name = models.CharField(max_length=15)
@@ -12,7 +13,7 @@ class Category(models.Model):
         return self.article_set.count()
 
 
-class Article(models.Model):
+class Article(models.Model,ReadNumExpand):
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     content = RichTextUploadingField()
@@ -27,3 +28,10 @@ class Article(models.Model):
 
     class Meta:
         ordering = ['-created_time']
+
+
+'''
+class ReadNum(models.Model):
+    read_num = models.IntegerField(default=0)
+    article = models.OneToOneField(Article, on_delete=models.DO_NOTHING)
+'''

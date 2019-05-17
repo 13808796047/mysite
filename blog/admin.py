@@ -9,4 +9,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'author', 'created_time', 'updated_time')
+    list_display = ('id','title', 'category', 'author','get_read_num', 'created_time', 'updated_time')
+
+'''
+@admin.register(ReadNum)
+class ReadNumAdmin(admin.ModelAdmin):
+    list_display = ('read_num','article')
+'''
