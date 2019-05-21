@@ -1,11 +1,12 @@
 import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import render, redirect
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
 from blog.models import Article
 from django.db.models import Sum
 from django.core.cache import cache
+from django.contrib import auth
 
 
 def get_7_days_hot_articles():
@@ -34,4 +35,15 @@ def home(request):
         'yesterday_hot_data': get_yesterday_hot_data(article_content_type),
         'hot_articles_for_7_days': hot_articles_for_7_days
     }
-    return render_to_response('home.html', context)
+    return render(request, 'home.html', context)
+
+
+def login(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(request, username=username, password=password)
+    if user is not None:
+        auth.login(request, user)
+        return redirect('/')
+    else:
+        return render(request, 'error.html', {'message': '用户名或密码不正确！'})

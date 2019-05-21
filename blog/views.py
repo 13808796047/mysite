@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.conf import settings
 from read_statistics.utils import read_statistics_once
@@ -44,7 +44,7 @@ def get_articles(request, articles):
 def article_list(request):
     articles = Article.objects.all()  # 全部文章
     context = get_articles(request, articles)
-    return render_to_response('blog/article_list.html', context)
+    return render(request,'blog/article_list.html', context)
 
 
 def articles_with_category(request, category_pk):
@@ -53,7 +53,7 @@ def articles_with_category(request, category_pk):
     context = get_articles(request, articles)
     context['category'] = category
 
-    return render_to_response('blog/articles_with_category.html', context)
+    return render(request,'blog/articles_with_category.html', context)
 
 
 def articles_with_date(request, year, month, day):
@@ -62,7 +62,7 @@ def articles_with_date(request, year, month, day):
     articles_with_date = '%s年%s月%s日' % (year, month, day)
     context['articles_with_date'] = articles_with_date
 
-    return render_to_response('blog/articles_with_date.html', context)
+    return render(request,'blog/articles_with_date.html', context)
 
 
 def article_detail(request, article_pk):
@@ -75,6 +75,6 @@ def article_detail(request, article_pk):
         'previous_article': previous_article,
         'next_article': next_article
     }
-    response = render_to_response('blog/article_detail.html', context)  # 设置阅读cookie
+    response = render(request,'blog/article_detail.html', context)  # 设置阅读cookie
     response.set_cookie(read_cookie_key, 'true', max_age=60)
     return response

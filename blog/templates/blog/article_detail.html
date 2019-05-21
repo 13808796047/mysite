@@ -24,7 +24,7 @@
                     <p>
                         上一篇:
                         {% if previous_article %}
-                            <a href="{% url 'article_detail' previous_article.pk%}">{{ previous_article.title }}</a>
+                            <a href="{% url 'article_detail' previous_article.pk %}">{{ previous_article.title }}</a>
                         {% else %}
                             没有了
                         {% endif %}
@@ -32,12 +32,28 @@
                     <p>
                         下一篇:
                         {% if next_article %}
-                            <a href="{% url 'article_detail' next_article.pk%}">{{ next_article.title }}</a>
+                            <a href="{% url 'article_detail' next_article.pk %}">{{ next_article.title }}</a>
                         {% else %}
                             没有了
                         {% endif %}
                     </p>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div>{{ user.is_authenticated }}</div>
+                {% if user.is_authenticated %}
+                    已登录
+                {% else %}
+                    未登录
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="username">
+                        <input type="password" name="password">
+                        <input type="submit" value="登录">
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>
