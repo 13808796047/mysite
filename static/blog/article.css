@@ -34,3 +34,10 @@ div .article-content {
 div.article-more{
     margin-top: 1em;
 }
+div.comment-area{
+    margin-top: 2em;
+}
+h3.comment-area-title{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: .4em;
+}

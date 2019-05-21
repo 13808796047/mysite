@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,reverse
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
@@ -44,6 +44,6 @@ def login(request):
     user = auth.authenticate(request, username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        return redirect('/')
+        return redirect(request.META.get('HTTP_REFERER', reverse('home')))
     else:
         return render(request, 'error.html', {'message': '用户名或密码不正确！'})
