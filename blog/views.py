@@ -3,6 +3,8 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from read_statistics.utils import read_statistics_once
 from .models import Article, Category
+from django.contrib.contenttypes.models import ContentType
+from comment.models import Comment
 
 
 def get_articles(request, articles):
@@ -44,7 +46,7 @@ def get_articles(request, articles):
 def article_list(request):
     articles = Article.objects.all()  # 全部文章
     context = get_articles(request, articles)
-    return render(request,'blog/article_list.html', context)
+    return render(request, 'blog/article_list.html', context)
 
 
 def articles_with_category(request, category_pk):
@@ -53,7 +55,7 @@ def articles_with_category(request, category_pk):
     context = get_articles(request, articles)
     context['category'] = category
 
-    return render(request,'blog/articles_with_category.html', context)
+    return render(request, 'blog/articles_with_category.html', context)
 
 
 def articles_with_date(request, year, month, day):
@@ -62,19 +64,22 @@ def articles_with_date(request, year, month, day):
     articles_with_date = '%s年%s月%s日' % (year, month, day)
     context['articles_with_date'] = articles_with_date
 
-    return render(request,'blog/articles_with_date.html', context)
+    return render(request, 'blog/articles_with_date.html', context)
 
 
 def article_detail(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
-    read_cookie_key = read_statistics_once(request,article)
+    read_cookie_key = read_statistics_once(request, article)
     previous_article = Article.objects.filter(created_time__gt=article.created_time).last()
     next_article = Article.objects.filter(created_time__lt=article.created_time).first()
+    article_content_type = ContentType.objects.get_for_model(article)
+    comments = Comment.objects.filter(content_type=article_content_type, object_id=article.pk)
     context = {
         'article': article,
         'previous_article': previous_article,
-        'next_article': next_article
+        'next_article': next_article,
+        'comments': comments,
     }
-    response = render(request,'blog/article_detail.html', context)  # 设置阅读cookie
+    response = render(request, 'blog/article_detail.html', context)  # 设置阅读cookie
     response.set_cookie(read_cookie_key, 'true', max_age=60)
     return response
